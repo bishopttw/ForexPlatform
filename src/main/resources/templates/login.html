@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+
+<div class="auth-container">
+    <div class="auth-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="20,220 80,180 140,200 200,120 260,150 320,60 380,90"
+                      fill="none" stroke="#22c55e" stroke-width="3"/>
+            <rect x="70" y="150" width="12" height="60" fill="#22c55e"/>
+            <rect x="130" y="170" width="12" height="40" fill="#ef4444"/>
+            <rect x="190" y="90" width="12" height="90" fill="#22c55e"/>
+            <rect x="250" y="120" width="12" height="60" fill="#ef4444"/>
+            <rect x="310" y="40" width="12" height="80" fill="#22c55e"/>
+        </svg>
+        <h2>Welcome Back</h2>
+        <p>Log in to continue trading.</p>
+    </div>
+
+    <div class="auth-form">
+        <h1>Log In</h1>
+        <p th:if="${param.error}" class="error-msg">Invalid username or password.</p>
+        <p th:if="${param.registered}" class="success-msg">Account created! Please log in.</p>
+        <form th:action="@{/login}" method="post" autocomplete="off">
+            <label>Email</label>
+            <input type="email" name="username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+        <p class="switch-link">Don't have an account? <a th:href="@{/register}">Sign up</a></p>
+    </div>
+</div>
+
+</body>
+</html>
