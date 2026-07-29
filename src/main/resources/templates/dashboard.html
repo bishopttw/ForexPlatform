@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">FX Trader</div>
+</header>
+
+<div class = "dashboard-content">
+    <h1>Live Rates</h1>
+
+    <table class="rates-table">
+        <thead>
+           <tr>
+               <th>Pair</th>
+               <th>Rate</th>
+               <th>Last Updated</th>
+           </tr>
+        </thead>
+        <tbody>
+           <tr th:each="rate : ${rates}">
+               <td th:text="${rate.pair}"></td>
+               <td th:text="${rate.rate}"></td>
+               <td th:text="${rate.lastUpdated}"></td>
+           </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

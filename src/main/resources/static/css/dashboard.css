@@ -1,0 +1,46 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+   background: #f5f7f6;
+}
+
+.navbar {
+   background: #061208;
+   padding: 20px 48px;
+   color: white;
+   font-weight: bold;
+   font-size: 20px;
+}
+
+.dashboard-content{
+   padding: 40px 48px;
+}
+
+.dashboard-content h1 {
+    margin-bottom: 24px;
+}
+
+.rates-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.rates-table th, .rates-table td{
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px soild #eee;
+}
+
+.rates-table th {
+   background: #22c55e;
+   color: #061208;
+}

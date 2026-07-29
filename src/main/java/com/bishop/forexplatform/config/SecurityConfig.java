@@ -20,6 +20,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard", true)
                         .permitAll()
                 )
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()));
