@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -30,6 +31,40 @@
            </tr>
         </tbody>
     </table>
+
+    <h2 style="margin-top: 40px;">EUR/USD History</h2>
+    <canvas id="rateChart" width="600" height="300"></canvas>
+
+    <script th:inline="javascript">
+        fetch('/api/history/eur-usd')
+        .then(response => response.json())
+        .then(data => {
+             const sorted = data.slice().reverse();
+             const labels = sorted.map(entry => entry.lastUpdated.split('T')[1].substring(0, 8));
+             const rates = sorted.map(entry => entry.rate);
+
+             const ctx = document.getElementById('rateChart');
+             new Chart(ctx, {
+                 type: 'line',
+                 data: {
+                     labels: labels,
+                     datasets: [{
+                         label: 'EUR/USD',
+                         data: rates,
+                         borderColor: '#22c55e',
+                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                         fill: true,
+                         tension: 0.2
+                     }]
+                 },
+                 options: {
+                     scales: {
+                        y: {beginAtZero: false}
+                     }
+                 }
+             });
+        });
+    </script>
 </div>
 </body>
 </html>

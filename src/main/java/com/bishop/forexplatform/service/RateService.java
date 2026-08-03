@@ -45,18 +45,20 @@ public class RateService {
             String target = parts[1];
 
             Double rate = fetchRate(base, target);
-
-            CurrencyRate currencyRate = currencyRateRepository.findByPair(pair)
-                    .orElse(new CurrencyRate(pair, rate, LocalDateTime.now()));
-
-            currencyRate.setRate(rate);
-            currencyRate.setLastUpdated(LocalDateTime.now());
-
-            currencyRateRepository.save(currencyRate);
+            CurrencyRate newEntry = new CurrencyRate(pair, rate, LocalDateTime.now());
+            currencyRateRepository.save(newEntry);
         }
     }
 
-    public List<CurrencyRate> getAllSavedRates(){
-        return currencyRateRepository.findAll();
+    public List<CurrencyRate> getLatestRates(){
+        return PAIRS.stream()
+                .map(pair -> currencyRateRepository.findFirstByPairOrderByLastUpdatedDesc(pair).orElse(null))
+                .filter(rate -> rate != null)
+                .toList();
+    }
+
+    public List<CurrencyRate> getHistory(String pair, int limit) {
+        List<CurrencyRate> history = currencyRateRepository.findByPairOrderByLastUpdatedDesc(pair);
+        return history.stream().limit(limit).toList();
     }
 }
