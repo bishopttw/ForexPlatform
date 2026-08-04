@@ -61,4 +61,10 @@ public class RateService {
         List<CurrencyRate> history = currencyRateRepository.findByPairOrderByLastUpdatedDesc(pair);
         return history.stream().limit(limit).toList();
     }
+
+    public Double getCurrentRate(String pair) {
+        return currencyRateRepository.findFirstByPairOrderByLastUpdatedDesc(pair)
+                .map(CurrencyRate::getRate)
+                .orElse(null);
+    }
 }
