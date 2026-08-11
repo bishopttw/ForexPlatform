@@ -6,8 +6,160 @@
 }
 
 body {
-   background: #f5f7f6;
+   background: #0a0f0d;
+   color: #e5e7eb;
 }
+
+.app-layout {
+    display:flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #0d1512;
+    border-right: 1px solid #1f2a24;
+    padding: 24px 0;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 0 24px 24px;
+    color: #22c55e;
+}
+
+.nav-item{
+    display: block;
+    padding: 12px 24px;
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+}
+
+.nav-item.active{
+    color: #ffffff;
+    background: rgba(34, 197, 94, 0.08);
+    border-left: 3px solid #22c55e;
+}
+
+/* MAIN CONTENT */
+
+.main-content {
+   flex: 1,
+   padding: 32px 40px;
+}
+
+.welcome-block .tag{
+   color: #22c55e;
+   font-size: 12px;
+   font-weight: 700;
+   letter-spacing: 1px;
+}
+
+.welcome-block h1{
+  font-size: 28px;
+  margin: 8px 0 4px;
+}
+
+.welcome-block p{
+   color: #9ca3af;
+   font-size: 1px;
+}
+
+/*  STAT CARDS */
+
+.stats-row {
+   display: flex;
+   gap: 16px;
+   margin: 28px 0;
+}
+
+.stat-card{
+  background: #0d1512;
+  border: 1px solid #1f2a24;
+  border-radius: 10px;
+  padding: 18px 22px;
+  flex: 1;
+}
+
+.stat-label{
+   display: block;
+   color: #9ca3af;
+   font-size: 12px;
+   margin-bottom: 8px;
+}
+
+.stat-value {
+   font-size: 22px;
+   font-weight: 700;
+}
+
+.status-active {
+  color: #22c55e;
+}
+
+/* PANELS */
+.panels-row {
+   display: flex;
+   gap: 20px;
+}
+
+.panel {
+   background: #0d1512;
+   border: 1px solid #1f2a24;
+   border-radius: 10px;
+   padding: 22px;
+}
+
+.panel h2{
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: #e5e7eb;
+}
+
+.rates-panel {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.rates-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rates-table th{
+ text-align: left;
+ font-size: 12px;
+ color: #9ca3af;
+ font-weight: 500;
+ padding-bottom: 10px;
+ border-bottom: 1px solid #1f2a24;
+}
+
+.rates-table td {
+  padding: 12px 0;
+  border-bottom: 1px solid #1f2a24;
+  font-size: 14px;
+}
+
+.rate-value {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.chart-panel{
+  flex: 1;
+  min-width: 0;
+}
+
+.chart-panel canvas {
+  max-height: 320px;
+}
+
 
 .navbar {
    background: #061208;

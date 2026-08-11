@@ -4,67 +4,122 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
 </head>
 <body>
 
-<header class="navbar">
-    <div class="logo">FX Trader</div>
-</header>
+<div class="app-layout">
 
-<div class = "dashboard-content">
-    <h1>Live Rates</h1>
+    <aside class="sidebar">
+        <div class="sidebar-logo">FX Trader</div>
+        <nav>
+            <a href="/dashboard" class="nav-item active">Overview</a>
+            <a href="#" class="nav-item">Trade</a>
+            <a href="#" class="nav-item">Portfolio</a>
+            <a href="#" class="nav-item">History</a>
+        </nav>
+    </aside>
 
-    <table class="rates-table">
-        <thead>
-           <tr>
-               <th>Pair</th>
-               <th>Rate</th>
-               <th>Last Updated</th>
-           </tr>
-        </thead>
-        <tbody>
-           <tr th:each="rate : ${rates}">
-               <td th:text="${rate.pair}"></td>
-               <td th:text="${rate.rate}"></td>
-               <td th:text="${rate.lastUpdated}"></td>
-           </tr>
-        </tbody>
-    </table>
+    <main class="main-content">
 
-    <h2 style="margin-top: 40px;">EUR/USD History</h2>
-    <canvas id="rateChart" width="600" height="300"></canvas>
+        <div class="welcome-block">
+            <span class="tag">OVERVIEW</span>
+            <h1>Welcome back, <span th:text="${user.username}"></span>.</h1>
+            <p>Simulated forex trading with real, live market rates.</p>
+        </div>
 
-    <script th:inline="javascript">
-        fetch('/api/history/eur-usd')
+        <div class="stats-row">
+            <div class="stat-card">
+                <span class="stat-label">Balance</span>
+                <span class="stat-value" th:text="'$' + ${user.balance}"></span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Open Positions</span>
+                <span class="stat-value">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Account Status</span>
+                <span class="stat-value status-active">Active</span>
+            </div>
+        </div>
+
+        <div class="panels-row">
+            <div class="panel rates-panel">
+                <h2>Markets</h2>
+                <table class="rates-table">
+                    <thead>
+                    <tr>
+                        <th>Pair</th>
+                        <th>Rate</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="rate : ${rates}">
+                        <td th:text="${rate.pair}"></td>
+                        <td class="rate-value" th:text="${rate.rate}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel chart-panel">
+                <h2>EUR/USD</h2>
+                <canvas id="rateChart"></canvas>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script th:inline="javascript">
+    fetch('/api/candles')
         .then(response => response.json())
         .then(data => {
-             const sorted = data.slice().reverse();
-             const labels = sorted.map(entry => entry.lastUpdated.split('T')[1].substring(0, 8));
-             const rates = sorted.map(entry => entry.rate);
+            const candleData = data.map(c => ({
+                x: new Date(c.datetime).getTime(),
+                o: c.open,
+                h: c.high,
+                l: c.low,
+                c: c.close
+            }));
 
-             const ctx = document.getElementById('rateChart');
-             new Chart(ctx, {
-                 type: 'line',
-                 data: {
-                     labels: labels,
-                     datasets: [{
-                         label: 'EUR/USD',
-                         data: rates,
-                         borderColor: '#22c55e',
-                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                         fill: true,
-                         tension: 0.2
-                     }]
-                 },
-                 options: {
-                     scales: {
-                        y: {beginAtZero: false}
-                     }
-                 }
-             });
+            const ctx = document.getElementById('rateChart');
+            new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: 'EUR/USD',
+                        data: candleData,
+                        color: {
+                            up: '#22c55e',
+                            down: '#ef4444',
+                            unchanged: '#9ca3af'
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: '#1f2a24' }
+                        },
+                        y: {
+                            ticks: { color: '#9ca3af' },
+                            grid: { color: '#1f2a24' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#e5e7eb' } }
+                    }
+                }
+            });
         });
-    </script>
-</div>
+</script>
+
 </body>
 </html>
