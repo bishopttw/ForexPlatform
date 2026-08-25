@@ -16,9 +16,9 @@
         <div class="sidebar-logo">FX Trader</div>
         <nav>
             <a href="/dashboard" class="nav-item active">Overview</a>
-            <a href="#" class="nav-item">Trade</a>
-            <a href="#" class="nav-item">Portfolio</a>
-            <a href="#" class="nav-item">History</a>
+            <a href="/trade" class="nav-item">Trade</a>
+            <a href="/portfolio" class="nav-item">Portfolio</a>
+            <a href="/history" class="nav-item">History</a>
         </nav>
     </aside>
 
@@ -93,6 +93,11 @@
                         label: 'EUR/USD',
                         data: candleData,
                         color: {
+                            up: '#16a34a',
+                            down: '#dc2626',
+                            unchanged: '#9ca3af'
+                        },
+                        backgroundColors:{
                             up: '#22c55e',
                             down: '#ef4444',
                             unchanged: '#9ca3af'

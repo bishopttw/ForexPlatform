@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trade</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">FX Trader</div>
+        <nav>
+            <a href="/dashboard" class="nav-item">Overview</a>
+            <a href="/trade" class="nav-item active">Trade</a>
+            <a href="/portfolio" class="nav-item">Portfolio</a>
+            <a href="/history" class="nav-item">History</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="welcome-block">
+            <span class="tag">TRADE</span>
+            <h1>Place a Trade</h1>
+            <p>Available balance: $<span th:text="${user.balance}"></span></p>
+        </div>
+
+        <p th:if="${tradeError}" th:text="${tradeError}" class="error-msg"></p>
+
+        <div class="panels-row">
+            <div class="panel" style="width : 380px; flex-shrink: 0;">
+                <h2>Order Details</h2>
+                <form th:action="@{trade}" method="post">
+
+                    <label>Currency Pair</label>
+                    <select name="pair" class="trade-input" required>
+                        <option value="EUR/USD">EUR/USD</option>
+                        <option value="GBP/USD">GBP/USD</option>
+                        <option value="USD/JPY">USD/JPY</option>
+                    </select>
+
+                    <label>Direction</label>
+                    <select name="direction" class="trade-input" required>
+                        <option value="BUY">Buy</option>
+                        <option value="SELL">Sell</option>
+                    </select>
+
+                    <label>Amount ($)</label>
+                    <input type="number" name="amount" class="trade-input" step="0.01" min="1" required>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 16px;">Place Trade</button>
+                </form>
+            </div>
+
+            <div class="panel" style="flex: 1;">
+                <h2>Live Market Prices</h2>
+                <table class="rates-table">
+                    <thead>
+                       <tr>
+                           <th>Pair</th>
+                           <th>Rate</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       <tr th:each="rate : ${rates}">
+                           <td th:text="${rate.pair}"></td>
+                           <td class="rate-value" th:text="${rate.rate}"></td>
+                       </tr>
+                    </tbody>
+                </table>
+
+                <p style="color: #9ca3af; font-size: 13px; margin-top: 20px;">
+                    Prices refresh automatically. Choose Buy if you expect the rate to rise, or Sell if you expect it to fall.
+                </p>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

@@ -196,3 +196,61 @@ body {
    background: #22c55e;
    color: #061208;
 }
+
+.trade-input {
+   width: 100px;
+   padding:12px;
+   margin-bottom: 18px;
+   border:1px solid #1f2a24;
+   border-radius: 8px;
+   background: #0a0f0d;
+   color: #e5e7eb;
+   font-size:14px;
+}
+
+label {
+   display: block;
+   margin-bottom:6px;
+   font-size: 13px;
+   color: #9ca3af;
+}
+
+.btn-primary {
+    background-color: #22c55e;
+    color: #061208;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #1ea54f;
+}
+
+/* P/L COLORS */
+.profit-positive {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.profit-negative {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.btn-close {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-close:hover {
+    background: rgba(239,68,68,0.1);
+}

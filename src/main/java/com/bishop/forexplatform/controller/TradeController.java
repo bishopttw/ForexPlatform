@@ -4,6 +4,7 @@ import com.bishop.forexplatform.entity.Trade;
 import com.bishop.forexplatform.entity.TradeDirection;
 import com.bishop.forexplatform.entity.User;
 import com.bishop.forexplatform.repository.UserRepository;
+import com.bishop.forexplatform.service.RateService;
 import com.bishop.forexplatform.service.TradeService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,20 @@ import java.math.BigDecimal;
 public class TradeController {
     private final TradeService tradeService;
     private final UserRepository userRepository;
+    private final RateService rateService;
 
-    public TradeController(TradeService tradeService, UserRepository userRepository){
+    public TradeController(TradeService tradeService, UserRepository userRepository, RateService rateService){
         this.tradeService = tradeService;
         this.userRepository = userRepository;
+        this.rateService = rateService;
+    }
+
+    @GetMapping("/trade")
+    public String showTradeForm(Authentication authentication, Model model){
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
+        model.addAttribute("user", user);
+        model.addAttribute("rates", rateService.getLatestRates());
+        return "trade";
     }
 
     @PostMapping("/trade")
@@ -35,7 +46,9 @@ public class TradeController {
 
         String error = tradeService.placeTrade(user, pair, direction, amount);
         if (error != null){
+            model.addAttribute("user", user);
             model.addAttribute("tradeError", error);
+            return "trade";
         }
 
         return "redirect:/dashboard";
