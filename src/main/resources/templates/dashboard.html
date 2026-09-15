@@ -37,7 +37,7 @@
             </div>
             <div class="stat-card">
                 <span class="stat-label">Open Positions</span>
-                <span class="stat-value">0</span>
+                <span class="stat-value" th:text="${openPositionsCount}"></span>
             </div>
             <div class="stat-card">
                 <span class="stat-label">Account Status</span>
@@ -46,6 +46,11 @@
         </div>
 
         <div class="panels-row">
+            <div class="panel chart-panel">
+                <h2>EUR/USD</h2>
+                <canvas id="rateChart"></canvas>
+            </div>
+
             <div class="panel rates-panel">
                 <h2>Markets</h2>
                 <table class="rates-table">
@@ -63,13 +68,7 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="panel chart-panel">
-                <h2>EUR/USD</h2>
-                <canvas id="rateChart"></canvas>
-            </div>
         </div>
-
     </main>
 </div>
 

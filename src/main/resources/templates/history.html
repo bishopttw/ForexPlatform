@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>History</title>
-    <Link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 <body>
 
@@ -13,8 +13,51 @@
         <div class="sidebar-logo">FX Trader</div>
         <nav>
             <a href="/dashboard" class="nav-item">Overview</a>
+            <a href="/trade" class="nav-item">Trade</a>
+            <a href="/portfolio" class="nav-item">Portfolio</a>
+            <a href="/history" class="nav-item active">History</a>
         </nav>
     </aside>
+
+    <main class="main-content">
+
+        <div class="welcome-block">
+            <span class="tag">HISTORY</span>
+            <h1>Trade History</h1>
+        </div>
+
+        <div class="panel">
+            <table class="rates-table">
+                <thead>
+                <tr>
+                    <th>Pair</th>
+                    <th>Direction</th>
+                    <th>Amount</th>
+                    <th>Open Price</th>
+                    <th>Close Price</th>
+                    <th>Result</th>
+                    <th>Closed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="trade : ${trades}">
+                    <td th:text="${trade.pair}"></td>
+                    <td th:text="${trade.direction}"></td>
+                    <td th:text="'$' + ${trade.amount}"></td>
+                    <td th:text="${trade.openPrice}"></td>
+                    <td th:text="${trade.closePrice}"></td>
+                    <td th:text="'$' + ${#numbers.formatDecimal(trade.profit, 1, 2)}"
+                        th:class="${trade.profit >= 0} ? 'profit-positive' : 'profit-negative'"></td>
+                    <td th:text="${#temporals.format(trade.closeTime, 'dd MMM, HH:mm')}"></td>
+                </tr>
+                <tr th:if="${trades.isEmpty()}">
+                    <td colspan="7" style="color: #9ca3af; text-align: center;">No closed trades yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
 </div>
 
 </body>
